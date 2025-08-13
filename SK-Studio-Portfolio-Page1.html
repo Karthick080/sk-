@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SK Studio - DESIGN MEETS DETAIL.</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>tailwind.config={theme:{extend:{colors:{primary:'#00F0FF',secondary:'#0A0A0A'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <style>
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0A0A0A;
+            color: #ffffff;
+            scroll-behavior: smooth;
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.7), 0 0 20px rgba(0, 240, 255, 0.5), 0 0 30px rgba(0, 240, 255, 0.3);
+        }
+        
+        .glow-border {
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.5), 0 0 20px rgba(0, 240, 255, 0.3);
+        }
+        
+        .service-card {
+            background: rgba(17, 17, 17, 0.8);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.5), 0 0 30px rgba(0, 240, 255, 0.3);
+        }
+        
+        .portfolio-item {
+            transition: all 0.3s ease;
+        }
+        
+        .portfolio-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.5), 0 0 30px rgba(0, 240, 255, 0.3);
+        }
+        
+        .portfolio-overlay {
+            background: rgba(10, 10, 10, 0.7);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+        
+        input, textarea {
+            background: #111111;
+            border: 1px solid #222222;
+            color: #ffffff;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus, textarea:focus {
+            border-color: #00F0FF;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #00F0FF, #0077ff);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.7), 0 0 30px rgba(0, 240, 255, 0.4);
+        }
+        
+        .social-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            color: #00F0FF;
+            transform: translateY(-3px);
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .fade-in.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .filter-btn.active {
+            color: #00F0FF;
+            border-bottom: 2px solid #00F0FF;
+        }
+        
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <header class="fixed top-0 left-0 w-full bg-secondary bg-opacity-90 backdrop-blur-md z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-white flex items-center">
+                <span class="font-['Pacifico'] text-primary mr-2">SK Studio</span>
+            </a>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#home" class="text-gray-300 hover:text-primary transition-colors">Home</a>
+                <a href="#services" class="text-gray-300 hover:text-primary transition-colors">Services</a>
+                <a href="#portfolio" class="text-gray-300 hover:text-primary transition-colors">Portfolio</a>
+                <a href="#contact" class="text-gray-300 hover:text-primary transition-colors">Contact</a>
+            </nav>
+            <button id="menu-toggle" class="md:hidden w-10 h-10 flex items-center justify-center text-white">
+                <i class="ri-menu-line ri-2x"></i>
+            </button>
+        </div>
+        <div id="mobile-menu" class="md:hidden hidden bg-secondary bg-opacity-95 backdrop-blur-md w-full">
+            <div class="container mx-auto px-6 py-4 flex flex-col space-y-4">
+                <a href="#home" class="text-gray-300 hover:text-primary transition-colors py-2">Home</a>
+                <a href="#services" class="text-gray-300 hover:text-primary transition-colors py-2">Services</a>
+                <a href="#portfolio" class="text-gray-300 hover:text-primary transition-colors py-2">Portfolio</a>
+                <a href="#contact" class="text-gray-300 hover:text-primary transition-colors py-2">Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <section id="home" class="min-h-screen flex items-center justify-center pt-20 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-[#0A0A0A] to-[#111111] z-0"></div>
+        <div id="particles" class="absolute inset-0 z-10"></div>
+        <div class="container mx-auto px-6 py-20 text-center z-20">
+            <h1 class="text-5xl md:text-7xl font-bold mb-4 glow-text fade-in">SK Studio</h1>
+            <h2 class="text-2xl md:text-3xl font-medium mb-6 text-gray-200 fade-in">Design Meets Detail</h2>
+            <p class="text-gray-300 max-w-2xl mx-auto mb-10 fade-in">Design and development solutions that blend creativity, code, and clarity.</p>
+            <a href="#contact" class="inline-block bg-gradient-to-r from-primary to-blue-500 text-black font-medium py-3 px-8 rounded-button shadow-lg hover:shadow-xl transition-all duration-300 whitespace-nowrap fade-in !rounded-button">
+                Start Your Project 🚀
+            </a>
+        </div>
+    </section>
+
+    <section id="services" class="py-20 relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 fade-in">Our Services</h2>
+                <p class="text-gray-300 max-w-2xl mx-auto fade-in">We offer a comprehensive range of design and development services to bring your vision to life.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="service-card rounded-2xl p-8 fade-in">
+                    <div class="w-16 h-16 flex items-center justify-center bg-black bg-opacity-50 rounded-full mb-6">
+                        <i class="ri-layout-4-line ri-xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Website Design</h3>
+                    <p class="text-gray-400">Custom website designs that captivate your audience and elevate your brand presence online.</p>
+                </div>
+                
+                <div class="service-card rounded-2xl p-8 fade-in">
+                    <div class="w-16 h-16 flex items-center justify-center bg-black bg-opacity-50 rounded-full mb-6">
+                        <i class="ri-code-s-slash-line ri-xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Website Development</h3>
+                    <p class="text-gray-400">Robust, responsive, and high-performance websites built with the latest technologies.</p>
+                </div>
+                
+                <div class="service-card rounded-2xl p-8 fade-in">
+                    <div class="w-16 h-16 flex items-center justify-center bg-black bg-opacity-50 rounded-full mb-6">
+                        <i class="ri-pen-nib-line ri-xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">UI/UX Design</h3>
+                    <p class="text-gray-400">Intuitive and engaging user interfaces with seamless user experiences that drive conversion.</p>
+                </div>
+                
+                <div class="service-card rounded-2xl p-8 fade-in">
+                    <div class="w-16 h-16 flex items-center justify-center bg-black bg-opacity-50 rounded-full mb-6">
+                        <i class="ri-smartphone-line ri-xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">App Design</h3>
+                    <p class="text-gray-400">Beautiful and functional mobile application designs that deliver exceptional user experiences.</p>
+                </div>
+                
+                <div class="service-card rounded-2xl p-8 fade-in">
+                    <div class="w-16 h-16 flex items-center justify-center bg-black bg-opacity-50 rounded-full mb-6">
+                        <i class="ri-artboard-2-line ri-xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Poster Design</h3>
+                    <p class="text-gray-400">Eye-catching poster designs that effectively communicate your message and attract attention.</p>
+                </div>
+                
+                <div class="service-card rounded-2xl p-8 fade-in">
+                    <div class="w-16 h-16 flex items-center justify-center bg-black bg-opacity-50 rounded-full mb-6">
+                        <i class="ri-shape-line ri-xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Logo Design</h3>
+                    <p class="text-gray-400">Distinctive and memorable logo designs that embody your brand's identity and values.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio" class="py-20 bg-[#0c0c0c]">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 fade-in">Our Portfolio</h2>
+                <p class="text-gray-300 max-w-2xl mx-auto mb-10 fade-in">Explore our latest projects and see how we've helped clients achieve their goals.</p>
+                
+                <div class="flex flex-wrap justify-center gap-4 mb-10 fade-in">
+                    <button class="filter-btn active px-4 py-2 text-gray-300 hover:text-primary transition-colors" data-filter="all">All</button>
+                    <button class="filter-btn px-4 py-2 text-gray-300 hover:text-primary transition-colors" data-filter="web">Web</button>
+                    <button class="filter-btn px-4 py-2 text-gray-300 hover:text-primary transition-colors" data-filter="app">App</button>
+                    <button class="filter-btn px-4 py-2 text-gray-300 hover:text-primary transition-colors" data-filter="branding">Branding</button>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="portfolio-item rounded-xl overflow-hidden fade-in" data-category="web">
+                    <div class="relative aspect-[4/3]">
+                        <img src="https://readdy.ai/api/search-image?query=modern%20minimalist%20dark%20website%20design%20with%20blue%20accent%2C%20professional%20portfolio%20website%2C%20clean%20interface%2C%20dark%20mode%20website%20design&width=600&height=450&seq=1&orientation=landscape" alt="E-commerce Website" class="w-full h-full object-cover object-top">
+                        <div class="portfolio-overlay absolute inset-0 flex flex-col justify-end p-6">
+                            <h3 class="text-xl font-semibold mb-2">vijo’s creation jewellery shop E-commerce</h3>
+                            <p class="text-gray-300 text-sm">Web Design & Development</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item rounded-xl overflow-hidden fade-in" data-category="app">
+                    <div class="relative aspect-[4/3]">
+                        <img src="https://readdy.ai/api/search-image?query=dark%20mode%20mobile%20app%20interface%20with%20blue%20glowing%20elements%2C%20futuristic%20UI%20design%2C%20black%20background%20with%20neon%20blue%20accents%2C%20modern%20mobile%20application&width=600&height=450&seq=2&orientation=landscape" alt="Fitness App" class="w-full h-full object-cover object-top">
+                        <div class="portfolio-overlay absolute inset-0 flex flex-col justify-end p-6">
+                            <h3 class="text-xl font-semibold mb-2">SteeGo Food Delivery App</h3>
+                            <p class="text-gray-300 text-sm">UI/UX & App Design</p>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                
+                
+                
+                
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="max-w-3xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4 glow-text fade-in">Let's Build Something Great Together</h2>
+                    <p class="text-gray-300 max-w-2xl mx-auto fade-in">Ready to start your project? Get in touch with us today and let's bring your vision to life.</p>
+                </div>
+                
+                <form id="contact-form" class="space-y-6 fade-in">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-300 mb-2">Name</label>
+                        <input type="text" id="name" name="name" class="w-full px-4 py-3 rounded-lg border-none focus:outline-none focus:ring-2 focus:ring-primary" required>
+                    </div>
+                    
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Email</label>
+                        <input type="email" id="email" name="email" class="w-full px-4 py-3 rounded-lg border-none focus:outline-none focus:ring-2 focus:ring-primary" required>
+                    </div>
+                    
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-300 mb-2">Message</label>
+                        <textarea id="message" name="message" rows="5" class="w-full px-4 py-3 rounded-lg border-none focus:outline-none focus:ring-2 focus:ring-primary" required></textarea>
+                    </div>
+                    
+                    <div class="text-center">
+                        <button type="submit" class="btn-primary py-3 px-8 rounded-button text-black font-medium shadow-lg hover:shadow-xl transition-all duration-300 whitespace-nowrap !rounded-button">Send Message</button>
+                    </div>
+                </form>
+                
+                <div class="mt-12 flex justify-center space-x-8 fade-in">
+                    <a href="#" class="flex flex-col items-center space-y-2 text-gray-300 hover:text-primary transition-colors">
+                        <div class="w-12 h-12 flex items-center justify-center bg-[#111111] rounded-full">
+                            <i class="ri-whatsapp-line ri-xl"></i>
+                        </div>
+                        <span class="text-sm">WhatsApp</span>
+                    </a>
+                    
+                    <a href="#" class="flex flex-col items-center space-y-2 text-gray-300 hover:text-primary transition-colors">
+                        <div class="w-12 h-12 flex items-center justify-center bg-[#111111] rounded-full">
+                            <i class="ri-mail-line ri-xl"></i>
+                        </div>
+                        <span class="text-sm">Email</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-10 border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <a href="#" class="text-2xl font-bold text-white flex items-center">
+                        <span class="font-['Pacifico'] text-primary">SK Studio</span>
+                    </a>
+                </div>
+                
+                <div class="flex space-x-6 mb-6 md:mb-0">
+                    <a href="#" class="social-icon w-10 h-10 flex items-center justify-center text-gray-400 hover:text-primary">
+                        <i class="ri-instagram-line ri-xl"></i>
+                    </a>
+                    <a href="#" class="social-icon w-10 h-10 flex items-center justify-center text-gray-400 hover:text-primary">
+                        <i class="ri-behance-line ri-xl"></i>
+                    </a>
+                    <a href="#" class="social-icon w-10 h-10 flex items-center justify-center text-gray-400 hover:text-primary">
+                        <i class="ri-linkedin-line ri-xl"></i>
+                    </a>
+                </div>
+                
+                <div class="text-gray-400 text-sm">
+                    © 2025 SK Studio. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script id="mobileMenuToggle">
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            menuToggle.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                
+                if (mobileMenu.classList.contains('hidden')) {
+                    menuToggle.innerHTML = '<i class="ri-menu-line ri-2x"></i>';
+                } else {
+                    menuToggle.innerHTML = '<i class="ri-close-line ri-2x"></i>';
+                }
+            });
+            
+            const mobileLinks = mobileMenu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenu.classList.add('hidden');
+                    menuToggle.innerHTML = '<i class="ri-menu-line ri-2x"></i>';
+                });
+            });
+        });
+    </script>
+
+    <script id="scrollAnimation">
+        document.addEventListener('DOMContentLoaded', function() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            function checkFade() {
+                fadeElements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const elementVisible = 150;
+                    
+                    if (elementTop < window.innerHeight - elementVisible) {
+                        element.classList.add('active');
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', checkFade);
+            checkFade();
+            
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script id="portfolioFilter">
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const portfolioItems = document.querySelectorAll('.portfolio-item');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const filterValue = this.getAttribute('data-filter');
+                    
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    portfolioItems.forEach(item => {
+                        if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+
+    <script id="contactForm">
+        document.addEventListener('DOMContentLoaded', function() {
+            const contactForm = document.getElementById('contact-form');
+            
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const message = document.getElementById('message').value;
+                
+                // This would normally send the form data to a server
+                // For now, we'll just show a success message
+                
+                alert(`Thank you, ${name}! Your message has been received. We'll get back to you soon.`);
+                contactForm.reset();
+            });
+        });
+    </script>
+
+    <script id="particlesAnimation">
+        document.addEventListener('DOMContentLoaded', function() {
+            const particles = document.getElementById('particles');
+            const particlesContext = document.createElement('canvas');
+            particlesContext.width = window.innerWidth;
+            particlesContext.height = window.innerHeight;
+            particlesContext.style.position = 'absolute';
+            particlesContext.style.top = '0';
+            particlesContext.style.left = '0';
+            particlesContext.style.width = '100%';
+            particlesContext.style.height = '100%';
+            particles.appendChild(particlesContext);
+            
+            const ctx = particlesContext.getContext('2d');
+            
+            let particlesArray = [];
+            const numberOfParticles = 100;
+            
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * particlesContext.width;
+                    this.y = Math.random() * particlesContext.height;
+                    this.size = Math.random() * 3 + 1;
+                    this.speedX = Math.random() * 1 - 0.5;
+                    this.speedY = Math.random() * 1 - 0.5;
+                    this.color = `rgba(0, 240, 255, ${Math.random() * 0.5})`;
+                }
+                
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    
+                    if (this.x > particlesContext.width || this.x < 0) {
+                        this.speedX = -this.speedX;
+                    }
+                    
+                    if (this.y > particlesContext.height || this.y < 0) {
+                        this.speedY = -this.speedY;
+                    }
+                }
+                
+                draw() {
+                    ctx.fillStyle = this.color;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+            
+            function init() {
+                particlesArray = [];
+                for (let i = 0; i < numberOfParticles; i++) {
+                    particlesArray.push(new Particle());
+                }
+            }
+            
+            function animate() {
+                ctx.clearRect(0, 0, particlesContext.width, particlesContext.height);
+                
+                for (let i = 0; i < particlesArray.length; i++) {
+                    particlesArray[i].update();
+                    particlesArray[i].draw();
+                }
+                
+                requestAnimationFrame(animate);
+            }
+            
+            window.addEventListener('resize', function() {
+                particlesContext.width = window.innerWidth;
+                particlesContext.height = window.innerHeight;
+                init();
+            });
+            
+            init();
+            animate();
+        });
+    </script>
+</body>
+</html>
